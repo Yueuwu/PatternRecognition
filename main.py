@@ -2,8 +2,9 @@ import cv2
 
 face_cascade = cv2.CascadeClassifier(".\haarcascades\haarcascade_frontalface_default.xml")
 eye_cascade = cv2.CascadeClassifier(".\haarcascades\haarcascade_eye.xml")
+smile_cascade = cv2.CascadeClassifier(".\haarcascades\haarcascade_smile.xml")
 #change to gray
-img = cv2.imread(".\somefaces\oneface1.jpg")
+img = cv2.imread(".\somefaces\oneface4.jpg")
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #detect objects(head). for better spotting increase or decrease second and third argument
 faces = face_cascade.detectMultiScale(gray, 3.8, 3)
@@ -17,6 +18,9 @@ for x,y,w,h in faces:
     eyes = eye_cascade.detectMultiScale(roi_gray, 3.9, 8)
     for ex, ey, ew, eh in eyes:
         cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+    smile = smile_cascade.detectMultiScale(roi_gray, 3.9, 8)
+    for sx, sy, sw, sh in smile:
+        cv2.rectangle(roi_color, (sx, sy), (sx + sw, sy + sh), (0, 0, 255), 2)
 # display window with img
 cv2.imshow('Face detected', img)
 #close window after click
